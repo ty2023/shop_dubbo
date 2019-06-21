@@ -1,0 +1,32 @@
+server:
+  port: 8080
+dubbo:
+  application:
+    name: shop_back_web
+  registry:
+    address: zookeeper://192.168.135.130:2181
+  consumer:
+    check: false
+    #配置重试 - 容错机制
+    retries: 1
+    timeout: 5000
+spring:
+  thymeleaf:
+    cache: false
+
+#配置fastdfs
+fdfs:
+  tracker-list:
+    - 192.168.135.130:22122
+  connect-timeout: 10000
+  so-timeout: 10000
+  #图片缩略图
+  thumb-image:
+    height: 100
+    width: 100
+  pool:
+    jmx-enabled: false
+
+#图片服务器的地址
+img:
+  server: http://192.168.135.130/

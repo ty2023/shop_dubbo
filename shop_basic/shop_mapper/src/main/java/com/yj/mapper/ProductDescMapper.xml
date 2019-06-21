@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.dao.ProductDescMapper">
+    <resultMap id="productDescMap"          type="productdesc">
+        <id property="proDescId"            column="id"/>
+        <result property="proId"            column="product_id"/>
+        <result property="proDesc"          column="product_desc"/>
+    </resultMap>
+
+    <sql id="desc_sql" >
+
+    </sql>
+
+    <select id="getList" resultMap="productDescMap">
+
+    </select>
+    
+    <insert id="doInsert">
+        insert into t_product_desc(product_id,product_desc) values (#{proId},#{proDesc})
+    </insert>
+
+    <!-- 删除 -->
+    <delete id="doDelete">
+        delete from t_product_desc where id=#{id}
+    </delete>
+
+    <select id="getById" resultMap="productDescMap">
+        select * from t_product_desc where product_id=#{id}
+    </select>
+    
+    <update id="doUpdate">
+        update t_product_desc
+        <set>
+            <if test="proDesc != null || proDesc != ''">
+                product_desc=#{proDesc}
+            </if>
+        </set>
+        where
+            product_id=#{proId}
+    </update>
+
+</mapper>

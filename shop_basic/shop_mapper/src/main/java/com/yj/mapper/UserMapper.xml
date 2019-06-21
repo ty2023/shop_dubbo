@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.dao.UserMapper">
+    <resultMap id="userMapper"               type="user">
+        <id property="id"                    column="id"/>
+        <result property="userName"          column="username"/>
+        <result property="passWord"          column="password"/>
+        <result property="email"             column="email"/>
+        <result property="phone"             column="phone"/>
+        <result property="sex"               column="sex"/>
+        <result property="age"               column="age"/>
+        <result property="birthday"          column="birthday"/>
+        <result property="flag"              column="flag"/>
+    </resultMap>
+    
+    <insert id="doInsert" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO
+            t_user (username,password,email,phone,sex,age,birthday)
+        values
+            (#{userName},#{passWord},#{email},#{phone},#{sex},#{age},#{birthday})
+    </insert>
+
+    <select id="getByUserName" resultMap="userMapper">
+        select * from t_user where username=#{userName}
+    </select>
+
+    <select id="getByEmail" resultMap="userMapper">
+        select * from t_user where email=#{email}
+    </select>
+
+    <select id="getByPhone" resultMap="userMapper">
+        select * from t_user where phone=#{email}
+    </select>
+    
+    <update id="doUpdate" >
+        update
+            t_user
+        <set>
+            <if test="userName != null || userName != ''">
+                username=#{userName},
+            </if>
+            <if test="passWord != null || passWord != ''">
+                password=#{passWord},
+            </if>
+            <if test="email != null || email != ''">
+                email=#{email},
+            </if>
+            <if test="phone != null || phone != ''">
+                phone=#{phone},
+            </if>
+            <if test="sex != null">
+                sex=#{sex},
+            </if>
+            <if test="age != null">
+                age=#{age},
+            </if>
+            <if test="birthday != null || birthday != ''">
+                birthday=#{birthday}
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+    
+    <update id="upUserFlag">
+        update t_user set flag = #{flag} where id= #{id}
+    </update>
+
+    <delete id="doDelete">
+        delete from t_user where id = #{id}
+    </delete>
+
+    <select id="toLogin" resultMap="userMapper">
+        select
+            *
+        from
+            t_user
+        where
+            username =#{userName}
+        and
+            password =#{passWord}
+    </select>
+
+</mapper>

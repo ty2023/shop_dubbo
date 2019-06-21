@@ -1,0 +1,16 @@
+spring:
+  mail:
+    host: smtp.163.com
+    username: 18173707896@163.com
+    password: Qwer0528
+    default-encoding: UTF-8
+  rabbitmq:
+    host: 192.168.135.130
+    username: guest
+    password: guest
+    port: 5672
+    virtual-host: /
+
+yujie:
+  emailFrom: 18173707896@163.com
+

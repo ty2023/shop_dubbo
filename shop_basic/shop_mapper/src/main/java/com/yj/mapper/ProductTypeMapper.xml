@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.dao.ProductTypeMapper">
+    <resultMap id="productTypeMap"          type="producttype">
+        <id property="typeId"               column="id"/>
+        <result property="parentTypeId"     column="pid"/>
+        <result property="parentTypeName"   column="pname"/>
+        <result property="typeName"         column="name"/>
+        <result property="typeFlag"         column="flag"/>
+    </resultMap>
+
+    <select id="getList" resultMap="productTypeMap">
+        select
+            t1.*
+        from
+            t_product_type t1
+        where
+            t1.flag = 1
+    </select>
+
+    <!-- 删除 -->
+    <delete id="doDelete">
+        delete from t_product_type where id=#{id}
+    </delete>
+
+
+</mapper>

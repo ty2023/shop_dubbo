@@ -1,0 +1,18 @@
+server:
+  port: 8081
+dubbo:
+  application:
+    name: index-web
+  registry:
+    address: zookeeper://192.168.135.130:2181
+  consumer:
+    check: false
+    #配置重试 - 容错机制
+    retries: 1
+    timeout: 5000
+spring:
+  thymeleaf:
+    cache: false
+
+
+

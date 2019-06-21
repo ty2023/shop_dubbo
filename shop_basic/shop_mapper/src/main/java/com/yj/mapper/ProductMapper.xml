@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.dao.ProductMapper">
+    <resultMap id="productMap"               type="product">
+        <id property="id"                    column="id"/>
+        <result property="proName"           column="name"/>
+        <result property="proPrice"          column="price"/>
+        <result property="proSalePrice"      column="sale_price"/>
+        <result property="proImages"         column="images"/>
+        <result property="proSalePoint"      column="sale_point"/>
+        <result property="proTypeId"         column="type_id"/>
+        <result property="proTypeName"       column="type_name"/>
+        <result property="proFlag"           column="flag"/>
+    </resultMap>
+
+    <!-- 查询单个 -->
+    <select id="getById" resultMap="productMap">
+        select
+            pro.*,
+            protype.name as type_name
+        from
+            t_product pro
+        left join
+            t_product_type protype
+        on
+            pro.type_id=protype.id
+        where
+            pro.id=#{id}
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="getList" resultMap="productMap">
+        select
+            pro.*,
+            protype.name as type_name
+        from
+            t_product pro
+        left join
+            t_product_type protype
+        on
+            pro.type_id=protype.id
+        where
+            pro.flag=1
+    </select>
+
+    <!-- 逻辑删除 -->
+    <update id="doDelete">
+        update t_product set flag=0 where id = #{id}
+    </update>
+
+    <!-- 添加商品 -->
+    <insert id="doInsert" keyProperty="id" useGeneratedKeys="true">
+        insert into
+            t_product(name,price,sale_price,images,sale_point,type_id)
+        values
+            (#{proName},#{proPrice},#{proSalePrice},#{proImages},#{proSalePoint},#{proTypeId})
+    </insert>
+
+    <!-- 批量删除 -->
+    <update id="batchDel" parameterType="java.util.List">
+        update t_product set flag=0 where id IN
+        <foreach collection="ids" item="id"  open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="doUpdate">
+        update
+            t_product
+        <set>
+            <if test="proName != null || paoName != ''">
+                name=#{proName},
+            </if>
+            <if test="proPrice != null">
+                price=#{proPrice},
+            </if>
+            <if test="proSalePrice != null">
+                sale_price=#{proSalePrice},
+            </if>
+            <if test="proImages != null || proImages =''">
+                images=#{proImages},
+            </if>
+            <if test="proSalePoint != null">
+                sale_point=#{proSalePoint},
+            </if>
+            <if test="proTypeId != null">
+                type_id=#{proTypeId},
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+</mapper>

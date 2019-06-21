@@ -1,0 +1,20 @@
+spring:
+  rabbitmq:
+    host: 192.168.135.130
+    username: guest
+    password: guest
+    port: 5672
+    virtual-host: /
+
+server:
+  port: 8083
+
+dubbo:
+  application:
+    name: web-item
+  registry:
+    address: zookeeper://192.168.135.130:2181
+  consumer:
+    check: false
+    timeout: 60000
+
